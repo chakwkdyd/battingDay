@@ -13,7 +13,7 @@ import com.bet.project.member.model.Member;
 import com.bet.project.member.service.MemberService;
 
 
-// test1
+// test1 22
 @Controller
 @RequestMapping("/member")
 public class MemberController {
