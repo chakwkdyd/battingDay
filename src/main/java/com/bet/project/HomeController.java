@@ -1,4 +1,4 @@
-package com.bet.project.member;
+package com.bet.project;
 
 import java.text.DateFormat;
 import java.util.Date;

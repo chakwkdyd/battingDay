@@ -1,4 +1,4 @@
-package com.bet.project.member.controller;
+package com.bet.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,12 +8,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bet.project.model.Member;
+import com.bet.project.service.MemberService;
 
-import com.bet.project.member.model.Member;
-import com.bet.project.member.service.MemberService;
 
 
-// test1
 @Controller
 @RequestMapping("/member")
 public class MemberController {
@@ -49,11 +48,11 @@ public class MemberController {
 		System.out.println("~~~~~~~~~~~~> "+ member.getCount());
 		
 		if(member.getCount() == 1) {
-			System.out.println("濡쒓렇�씤 �꽦怨�");	
+			System.out.println("로그인 성공");	
 			mav.addObject("loginResult", model.getUser_name() );
 			mav.setViewName("/main/main");
 		}else {
-			mav.addObject("loginResult", "�븘�씠�뵒 鍮꾨�踰덊샇瑜� �솗�씤�븯�꽭�슂");
+			mav.addObject("loginResult", "아이디 비밀번호를 확인하세요");
 			mav.setViewName("/member/login");
 		}
 		
@@ -69,10 +68,10 @@ public class MemberController {
 		boolean result;
 		
 		if(memberService.checkId(id) == 1) {
-			System.out.println("�궗�슜遺덇�!! false");
+			System.out.println("사용불가!! false");
 			result= false;
 		}else {
-			System.out.println("�궗�슜 媛��뒫!! true");
+			System.out.println("사용 가능!! true");
 			result= true;
 		}
 		
