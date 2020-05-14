@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+	
+	
+	
+	<select id="list" resultType="com.bet.project.member.model.Member">
+		SELECT * FROM bet_member ORDER BY JOIN_DATE DESC
+	</select>
+	
+	<select id="checkId" resultType="int" parameterType="String">
+		SELECT count(*) 
+		FROM bet_member
+		where user_id = #{id}
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="join" parameterType="com.bet.project.member.model.Member">
+		INSERT INTO bet_member 
+		(	
+			 USERSEPARATOR
+			,USER_ID
+			,USER_PW
+			,TEL_NUMBER
+			,USER_NAME
+			,USER_EMAIL
+			,JOIN_DATE
+		)
+		values
+		(	
+			 (SELECT MAX(USERSEPARATOR) +1 FROM BET_MEMBER B)<!-- 씨퀀스 작업! -->
+			,#{user_id}
+			,#{user_pw}	
+			,#{tel_number}	
+			,#{user_name}
+			,#{user_email}
+			,now()
+		)
+		
+	</insert>
+	
+	<select id="login" resultType="com.bet.project.member.model.Member" parameterType="com.bet.project.member.model.Member">
+		SELECT 
+			 count(*)
+			,user_name 
+		FROM bet_member
+		where 
+			user_id = #{id}
+		and
+			user_pw = #{pw}
+	</select>
+	
+	
+	
+</mapper>
