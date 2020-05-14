@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	
-	<select id="list" resultType="com.bet.project.member.model.Member">
+	<select id="list" resultType="com.bet.project.model.Member">
 		SELECT * FROM bet_member ORDER BY JOIN_DATE DESC
 	</select>
 	
@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 회원가입 -->
-	<insert id="join" parameterType="com.bet.project.member.model.Member">
+	<insert id="join" parameterType="com.bet.project.model.Member">
 		INSERT INTO bet_member 
 		(	
 			 USERSEPARATOR
@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 	</insert>
 	
-	<select id="login" resultType="com.bet.project.member.model.Member" parameterType="com.bet.project.member.model.Member">
+	<select id="login" resultType="com.bet.project.model.Member" parameterType="com.bet.project.model.Member">
 		SELECT 
 			 count(*)
 			,user_name 

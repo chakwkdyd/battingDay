@@ -1,7 +1,8 @@
-package com.bet.project.member.service;
+package com.bet.project.service;
 
 import java.util.List;
-import com.bet.project.member.model.Member;
+
+import com.bet.project.model.Member;
 
 
 

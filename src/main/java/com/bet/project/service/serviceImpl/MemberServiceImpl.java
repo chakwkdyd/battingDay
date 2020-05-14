@@ -1,4 +1,4 @@
-package com.bet.project.member.service.serviceImpl;
+package com.bet.project.service.serviceImpl;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bet.project.member.dao.MemberDao;
-import com.bet.project.member.model.Member;
-import com.bet.project.member.service.MemberService;
+import com.bet.project.dao.MemberDao;
+import com.bet.project.model.Member;
+import com.bet.project.service.MemberService;
 
 
 

@@ -1,4 +1,4 @@
-package com.bet.project.member.model;
+package com.bet.project.model;
 
 import java.util.Date;
 
