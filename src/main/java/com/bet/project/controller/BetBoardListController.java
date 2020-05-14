@@ -12,7 +12,7 @@ import com.bet.project.model.Member;
 import com.bet.project.service.MemberService;
 
 
-
+//test
 @Controller
 public class BetBoardListController {
 	
