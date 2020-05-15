@@ -33,7 +33,6 @@
 			
 			<tr>
 				<td>
-					$(loginResult);
 					<!-- <input type="text"  style="width: 100%;" value="$()"> -->
 					<input style="width: 100%;" type="submit" value="로그인">
 				</td>

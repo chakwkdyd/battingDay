@@ -12,16 +12,22 @@ import com.bet.project.model.Member;
 import com.bet.project.service.MemberService;
 
 
-//ddd
 @Controller
-public class BetBoardDetailController {
+@RequestMapping("/board")
+public class BetBoardController {
+	
+	
+	@RequestMapping("/insertBoard")
+	public String login() {
+		return "/board/boardInsert";
+	}
 	
 	/*
 	@Autowired
 	MemberService memberService;
 	
 	Member member = new Member();
-	
+	${path}/board/insertBoard
 	
 	@RequestMapping("/join.do")
 	public ModelAndView join(@ModelAttribute Member model,ModelAndView mav) {
