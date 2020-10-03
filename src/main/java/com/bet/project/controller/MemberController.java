@@ -43,7 +43,6 @@ public class MemberController {
 	@RequestMapping("/login.do")
 	public ModelAndView login(@ModelAttribute Member model, ModelAndView mav) {
 		
-		
 		member = memberService.login(model);
 		System.out.println("~~~~~~~~~~~~> "+ member.getCount());
 		
