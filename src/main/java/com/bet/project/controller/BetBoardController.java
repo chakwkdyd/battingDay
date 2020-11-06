@@ -22,6 +22,22 @@ public class BetBoardController {
 		return "/board/boardInsert";
 	}
 	
+	@RequestMapping("/insert.do")
+	public ModelAndView insert(ModelAndView mav ) {
+		
+		// 방제
+		// 참여자 수 
+		// 카테고리
+		// 상품(파일)		-> 테이블 참조
+		// 참여 여부		
+		// 수정날짜 
+		// 생성날짜
+		// 방 종료일 		->  
+
+		
+		return mav;
+	}
+	
 	/*
 	@Autowired
 	MemberService memberService;

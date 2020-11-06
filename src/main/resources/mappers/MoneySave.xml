@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Money">
+	
+	
+  <!--  <resultMap type="map" id="selectMapList">
+   		column : DB값 || property : Class값 
+        <result column="student_no" 	property="studentNo"/>
+        <result column="student_name" 	property="studentName"/>
+        <result column="student_tel" 	property="studentTel"/>
+        <result column="student_Addr"	property="studentAddr"/>
+        <result column="student_email" 	property="studentEmail"/>
+        <result column="reg_date" 		property="redDate"/>
+    </resultMap> -->
+	
+	
+	
+	<insert id="inertMoneykeeping" parameterType="java.util.ArrayList">
+	/* id="inertMoneykeeping" [가계부 insert문 ] [박다빈 / 2020-10-20] */
+	INSERT INTO MONEYSAVE_CONTENT(
+		  years
+		 ,months
+		 ,days
+		 ,P_txt
+		 ,P_price
+		 ,M_txt
+		 ,M_price
+		 ,regdate
+		 ,delYn
+		 ,flag
+		 ,fixe
+	) VALUES 
+		<foreach item="item" index="index" collection="list"   separator=","  >
+			(
+		 	 #{item.years}
+		 	,#{item.months}
+		 	,#{item.days}
+			,#{item.P_txt}
+	 		,#{item.P_price}
+			,#{item.M_txt}
+	 		,#{item.M_price}
+		 	,now()
+		 	,'N'
+		 	,#{item.flag}
+		 	,#{item.fixe}
+		 	)
+		</foreach>
+	</insert>
+	
+	
+										
+	<select id="getList" parameterType="com.bet.project.model.MoneySave" resultType="com.bet.project.model.MoneySave">
+	/* id="getList" [년,월별 가계부 data 갖고오기] [박다빈 / 2020-10-20] */
+		SELECT
+   			x.*
+		FROM (SELECT 
+			 	 years
+			    ,months
+			    ,days
+			    ,IFNULL(P_txt, 	 0) as P_txt
+			    ,IFNULL(P_price, 0)	as P_price
+			    ,IFNULL(M_txt,   0)	as M_txt
+			    ,IFNULL(M_price, 0)	as M_price
+			    ,flag
+			    ,fixe
+			    ,fseq
+			FROM MONEYSAVE_CONTENT
+			WHERE 1=1 
+			AND years 	= #{years}
+			AND months 	= #{months}
+			AND delYn  	='N'
+			AND fixe 	='N'
+			
+	  	UNION ALL  	
+	  	
+	  		SELECT 
+			 	 years
+			    ,months
+			    ,days
+			    ,IFNULL(P_txt, 	 0) as P_txt
+			    ,IFNULL(P_price, 0)	as P_price
+			    ,IFNULL(M_txt,   0)	as M_txt
+			    ,IFNULL(M_price, 0)	as M_price
+			    ,flag
+			    ,fixe
+			    ,fseq
+			FROM MONEYSAVE_CONTENT
+			WHERE 1=1		
+			AND delYn  	='N'
+			AND fixe 	='Y') X
+	ORDER BY X.days ASC
+	</select>
+	
+	<update id="delte">
+	/* id="delte" [삭제] [박다빈 / 2020-10-20] */
+	UPDATE moneysave_content 
+	SET 
+		delYn ='Y'
+	WHERE	
+		fseq = #{fseq}
+	</update>
+	
+	<update id="update">
+	/* id="update" [업데이트] [박다빈 / 2020-10-20] */
+	UPDATE moneysave_content 
+	SET 
+		 P_txt 		= #{p_txt}
+		,P_price 	= #{P_price}
+		,M_txt 		= #{M_txt}
+		,M_price 	= #{M_price}
+	WHERE
+		fseq = #{fseq}
+	</update>
+	
+</mapper>

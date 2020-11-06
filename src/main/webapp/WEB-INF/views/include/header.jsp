@@ -6,9 +6,12 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <div>
+
 	<a href="${path}/">회원가입</a>
 	<a href="${path}/board/insertBoard" >방 만들기</a>
 	<a href="${path}/member/login" >로그인</a>
+	<a href="${path}/callinder/moneySave.do">가계부 </a>
+	
 </div>
 
 <hr>
