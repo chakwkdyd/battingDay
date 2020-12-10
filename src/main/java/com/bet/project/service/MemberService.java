@@ -15,5 +15,7 @@ public interface MemberService {
 	public int checkId(String id);
 	
 	public Member login(Member model);
+
+	public int checkEmail(String email);
 }
 

@@ -7,35 +7,58 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<select id="list" resultType="com.bet.project.model.Member">
-		SELECT * FROM bet_member ORDER BY JOIN_DATE DESC
+		SELECT * FROM member ORDER BY JOIN_DATE DESC
 	</select>
 	
 	<select id="checkId" resultType="int" parameterType="String">
-		SELECT count(*) 
-		FROM bet_member
-		where user_id = #{id}
+		SELECT 
+			count(*) 
+		FROM 
+			users_tb
+		WHERE 
+			user_id = #{id}
+	</select>
+	
+	<select id="checkEmail" resultType="int" parameterType="String">
+		SELECT 
+			count(*) 
+		FROM 
+			users_tb
+		WHERE 
+			user_email = #{email}
 	</select>
 	
 	<!-- 회원가입 -->
 	<insert id="join" parameterType="com.bet.project.model.Member">
-		INSERT INTO bet_member 
+	/* id="join" [회원가입 박다빈]*/
+		INSERT INTO users_tb 
 		(	
-			 USERSEPARATOR
-			,USER_ID
-			,USER_PW
-			,TEL_NUMBER
-			,USER_NAME
-			,USER_EMAIL
-			,JOIN_DATE
+			 user_id 		
+			,user_pw   
+			,user_name	
+			,user_gender
+			,date_y	
+			,date_m		
+			,date_d		
+			,user_email 
+			,user_number
+			,user_adress
+			,user_regdate
+			,user_moddate
 		)
 		values
 		(	
-			 (SELECT MAX(USERSEPARATOR) +1 FROM BET_MEMBER B)<!-- 씨퀀스 작업! -->
-			,#{user_id}
+			 #{user_id}
 			,#{user_pw}	
-			,#{tel_number}	
-			,#{user_name}
+			,#{user_name}	
+			,#{user_gender}	
+			,#{date_y}
+			,#{date_m}
+			,#{date_d}
 			,#{user_email}
+			,#{user_number}
+			,#{user_adress}
+			,now()
 			,now()
 		)
 		
@@ -44,12 +67,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="login" resultType="com.bet.project.model.Member" parameterType="com.bet.project.model.Member">
 		SELECT 
 			 count(*)
-			,user_name 
-		FROM bet_member
+		FROM member
 		where 
-			user_id = #{id}
+			user_id = #{user_id}
 		and
-			user_pw = #{pw}
+			user_pw = #{user_pw}
 	</select>
 	
 	

@@ -19,15 +19,19 @@
 	<logger name="first" additivity="false">
 		<level value="debug" />
 		<appender-ref ref="console" />
-	</logger> <!-- Query Loggers -->
+	</logger> 
+	
+	<!-- Query Loggers -->
 	<logger name="jdbc.sqlonly" additivity="false">
 		<level value="INFO" />
 		<appender-ref ref="console-infolog" />
 	</logger>
+	
 	<logger name="jdbc.resultsettable" additivity="false">
 		<level value="INFO" />
 		<appender-ref ref="console" />
 	</logger> 
+	
 	<!-- Root Logger -->
 	<root>
 		<priority value="off" />

@@ -17,6 +17,8 @@ import com.bet.project.service.MemberService;
 public class BetBoardController {
 	
 	
+	
+	
 	@RequestMapping("/insertBoard")
 	public String login() {
 		return "/board/boardInsert";
@@ -45,7 +47,6 @@ public class BetBoardController {
 	Member member = new Member();
 	${path}/board/insertBoard
 	
-	@RequestMapping("/join.do")
 	public ModelAndView join(@ModelAttribute Member model,ModelAndView mav) {
 		
 		mav.addObject("joinResult", memberService.join(model));

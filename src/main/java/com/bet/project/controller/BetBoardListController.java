@@ -23,7 +23,6 @@ public class BetBoardListController {
 	Member member = new Member();
 	
 	
-	@RequestMapping("/join.do")
 	public ModelAndView join(@ModelAttribute Member model,ModelAndView mav) {
 		
 		mav.addObject("joinResult", memberService.join(model));

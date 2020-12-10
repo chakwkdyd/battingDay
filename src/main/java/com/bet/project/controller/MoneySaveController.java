@@ -157,7 +157,8 @@ public class MoneySaveController {
 			,String flag)  {
 		ArrayList<MoneySave> dto = new ArrayList<>();
 		MoneySave searchModel = new MoneySave();
-		 
+
+		// year=2020 	&month=11&	flag=Y
 		// --- 신규 저장 값 있을 경우 ---
 		if(flag == null) {
 				if (vo.getP_result() != null) {

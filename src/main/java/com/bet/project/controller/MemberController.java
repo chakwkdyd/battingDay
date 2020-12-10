@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,8 +29,22 @@ public class MemberController {
 	
 	Member member = new Member();
 	
+	@RequestMapping("/login")
+	public String login() {
+		return "/member/login";
+	}
 	
-	@RequestMapping("/join.do")
+	@RequestMapping("/getId.do")
+	public String getId() {
+		return "/member/idFind";
+	}
+	
+	@RequestMapping("/getPw.do")
+	public String getPw() {
+		return "/member/pwFind";
+	}
+	
+	@RequestMapping(value = "/join.do", method=RequestMethod.POST)
 	public ModelAndView join(@ModelAttribute Member model,ModelAndView mav) {
 		
 		mav.addObject("joinResult", memberService.join(model));
@@ -38,27 +53,20 @@ public class MemberController {
 	}
 	
 	
-	
-	@RequestMapping("/login")
-	public String login() {
-		return "/member/login";
-	}
-	
-	
 	@RequestMapping("/login.do")
 	public ModelAndView login(@ModelAttribute Member model, ModelAndView mav) {
 		
 		member = memberService.login(model);
-		System.out.println("~~~~~~~~~~~~> "+ member.getCount());
+		//System.out.println("~~~~~~~~~~~~> "+ member.getCount());
 		
-		if(member.getCount() == 1) {
-			System.out.println("로그인 성공");	
-			mav.addObject("loginResult", model.getUser_name() );
-			mav.setViewName("/main/main");
-		}else {
-			mav.addObject("loginResult", "아이디 비밀번호를 확인하세요");
-			mav.setViewName("/member/login");
-		}
+//		if(member.getCount() == 1) {
+//			System.out.println("로그인 성공");	
+//			mav.addObject("loginResult", model.getUser_name() );
+//			mav.setViewName("/main/main");
+//		}else {
+//			mav.addObject("loginResult", "아이디 비밀번호를 확인하세요");
+//			mav.setViewName("/member/login");
+//		}
 		
 		
 		return mav;
@@ -68,7 +76,7 @@ public class MemberController {
 	
 	@RequestMapping("/checkId.do")
 	@ResponseBody
-	public boolean checkId(@RequestParam String id, ModelAndView mav) {
+	public boolean checkId(@RequestParam String id) {
 		boolean result;
 		
 		if(memberService.checkId(id) == 1) {
@@ -77,6 +85,23 @@ public class MemberController {
 		}else {
 			System.out.println("사용 가능!! true");
 			result= true;
+		}
+		
+		
+		return result;
+	}
+	@RequestMapping("/checkEmail.do")
+	@ResponseBody
+	public boolean checkEmail(@RequestParam String email) {
+		boolean result;
+		
+		// -- 이메일 있으면 --
+		if(memberService.checkEmail(email) != 0) {
+			
+			result= true;
+			
+		}else {
+			result= false;
 		}
 		
 		

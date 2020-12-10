@@ -16,27 +16,35 @@
 	<form action="/member/login.do">
 		
 		<table border="1">
-			<tr><td>아이디:</td></tr>
+			<tr><td style="text-align: center; background-color: #B4FFFF;">아이디</td></tr>
 			<tr>
 				<td>
 					<input type="text" name="user_id" id="user_id">
 				</td>
 			</tr>
-			
-			<tr><td>비밀번호:</td></tr>
+				
+			<tr><td style="text-align: center; background-color: #B4FFFF;">비밀번호</td></tr>
 			<tr>
 				<td>
-					<input type="text" name="user_pw" id="pw1" class="pw">
+					<input type="password" name="user_pw" id="pw1" class="pw">
 				</td>
 			</tr>
+				
 			 
 			
 			<tr>
 				<td>
-					<!-- <input type="text"  style="width: 100%;" value="$()"> -->
+					<input type="text" id="roginResult" style="width: 100%;" hidden="true">
 					<input style="width: 100%;" type="submit" value="로그인">
 				</td>
 			</tr>
+			<tr>
+				<td>
+					<a href="${path}/member/getId.do">아이디 찾기</a>
+					<a href="${path}/member/getPw.do">비밀번호찾기 </a>
+				</td>
+			</tr>
+			
 		</table>
 	</form>
 

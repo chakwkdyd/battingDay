@@ -41,6 +41,11 @@ public class MemberServiceImpl implements MemberService {
 		System.out.println(model.toString());
 		return memberDao.join(model);
 	}
+
+	@Override
+	public int checkEmail(String email) {
+		return memberDao.checkEmail(email);
+	}
 	
 	
 }

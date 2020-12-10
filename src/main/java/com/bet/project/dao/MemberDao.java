@@ -32,6 +32,10 @@ public class MemberDao {
 	 public Member login(Member model) {
 		 return sqlSession.selectOne("member.login", model);
 	 }
+
+	public int checkEmail(String email) {
+		return sqlSession.selectOne("member.checkEmail", email);
+	}
 	 
 	 
 	 
