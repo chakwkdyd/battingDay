@@ -19,6 +19,12 @@
 	<dependencies>
 	
 	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context-support</artifactId>
+		<version>4.3.0.RELEASE</version>
+	</dependency>
+	
+	<dependency>
 		<groupId>org.apache.poi</groupId>
 		<artifactId>poi</artifactId>
 		<version>3.15</version>
@@ -38,6 +44,7 @@
 	    <version>2.9.9</version>
 	</dependency>
 	
+	
 
 	<!-- 문자인증 라이브러리 -->
 	<dependency>
@@ -50,7 +57,7 @@
 	  <dependency>
 	    <groupId>javax.mail</groupId>
 	    <artifactId>mail</artifactId>
-	    <version>1.4.3</version>
+	    <version>1.4.7</version>
 	  </dependency>
 	
 	
@@ -163,8 +170,13 @@
 	<dependency>
 	    <groupId>com.fasterxml.jackson.core</groupId>
 	    <artifactId>jackson-databind</artifactId>
-	    <version>2.10.1</version>
+	    <version>2.9.9</version>
 	</dependency>
+		
+	
+
+	
+	
 	
 	<!-- Json 사용위한 3-->
 	<dependency>

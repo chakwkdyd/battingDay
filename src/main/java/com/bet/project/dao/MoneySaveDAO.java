@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.bet.project.model.MoneySave;
+import com.bet.project.model.Want;
 
 @Repository
 public class MoneySaveDAO {
@@ -30,6 +31,22 @@ public class MoneySaveDAO {
 
 	public int update(MoneySave dto) {
 		return sqlSession.update("Money.update", dto);
+	}
+
+	public void insertWant(Want dto) {
+		sqlSession.insert("Money.insertWant", dto);
+	}
+
+	public List<Want> selectWant(Want dto) {
+		return sqlSession.selectList("Money.selectWant", dto);
+	}
+
+	public int deleteWant(Want dto) {
+		return sqlSession.update("Money.deleteWant", dto);
+	}
+
+	public int updateWant(Want dto) {
+		return sqlSession.update("Money.updateWant", dto);
 	}
 
 

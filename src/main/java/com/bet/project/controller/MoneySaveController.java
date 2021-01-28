@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bet.project.model.MoneySave;
+import com.bet.project.model.Want;
+import com.bet.project.service.ExcelDownService;
 import com.bet.project.service.MoneySaveService;
 
 
@@ -33,21 +36,86 @@ public class MoneySaveController {
 	@Autowired
 	MoneySaveService service;
 	
+	@Autowired
+	ExcelDownService ExcelService;
 	
 	@RequestMapping(value = "/excelDown.do", method = RequestMethod.POST)
     public void  downloadExcelFile(HttpServletResponse response
     		,HttpServletRequest req
     		,MoneySave param) {
-		service.getExcelDown(response, req, param);
+		ExcelService.getExcelDown(response, req, param);
     }
+	
+	@RequestMapping("/popupWant.do")
+	public ModelAndView popupWant(ModelAndView mav
+			,Map<String, String> map
+			,String fixeYn 
+			,String flag
+			,String years
+			,String months
+			,@RequestParam(defaultValue = "0")String seq
+			,@RequestParam(defaultValue = "내용")String txt 
+			,@RequestParam(defaultValue = "0")String price 
+			) {
+		
+		
+		map.put("flag", 	flag);
+		map.put("years", 	years);
+		map.put("months", 	months);
+		// ---디테일 ---
+		map.put("seq", 	seq);
+		map.put("txt", 	txt);
+		map.put("price",price);
+		
+		
+		mav.addObject("map", map);
+		mav.addObject("fixeYn", fixeYn);
 
+		mav.setViewName("moneySave/popupWant");
+		return mav; 
+	}
+	
+	@RequestMapping("/insertWant.do")
+	@ResponseBody
+	public void insertWant (@ModelAttribute Want dto) {
+		
+		service.insertWant(dto);
+	}
+	
+	@RequestMapping("/selectWant.do")
+	@ResponseBody
+	public List<Want> selectWant (String year
+			, String month
+			, Want dto) {
+		
+		dto.setYears(year);
+		dto.setMonths(month);
+
+		List<Want> list = service.selectWant(dto);
+		return list; 
+	}
+	
+	@RequestMapping("/updateWant.do")
+	@ResponseBody
+	public int updateWant (@ModelAttribute Want dto) {
+		return service.updateWant(dto);
+	}
+	
+	
+	@RequestMapping("/deleteWant.do")
+	@ResponseBody
+	public int deleteWant (@ModelAttribute Want dto) {
+		return service.deleteWant(dto);
+	}
+	
+	
 	
 	@RequestMapping("/moneySave.do")
 	public ModelAndView callinder(ModelAndView mav
 								,String moveYear	// 년
 								,String moveMonth	// 월
 								,String moveDay		// 일
-								,String moveResult	// 구분(prev, thisMonth, next)
+								,String moveResult	// 구분(prev, thisMonth, next, prevY ,nextY)
 								,String flag		// Y
 								) {
 		SimpleDateFormat fmtY = new SimpleDateFormat("yyyy");
@@ -64,6 +132,10 @@ public class MoneySaveController {
 		 
 		Calendar cal = Calendar.getInstance();
 		Date date = new Date();
+		 
+		
+		int[] prevMonth = new int[] { 0, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11 };
+		int[] nextMonth = new int[] {13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 };
 		 
 		 // === 첫 load ===
 		 if(flag == null) {
@@ -83,6 +155,8 @@ public class MoneySaveController {
 			 mav.addObject("day", 	fmtD.format(date));		// 일 
 			 mav.addObject("lastDay", 	cal.getActualMaximum(Calendar.DAY_OF_MONTH));// 마지막 일 
 			 
+			 
+			 
 		 // === 이후 load ===
 		 }else {
 			 
@@ -97,6 +171,33 @@ public class MoneySaveController {
 			if(moveResult.equals("prev")){
 				moveMonth = Integer.toString((Integer.parseInt(moveMonth) -1));
 				
+				int num =(Integer.parseInt(moveMonth) -1);
+				boolean f = false;
+					
+				
+				for (int i = 0; i < prevMonth.length; i++) {
+					// -- 작년으로  -- 
+					if (prevMonth[i] == num) {
+						f = true;
+						if(prevMonth[i] == -1) 		 { num =12;}
+						else if(prevMonth[i] == -2)  { num =11;}
+						else if(prevMonth[i] == -3)  { num =10;}
+						else if(prevMonth[i] == -4)  { num =9; }
+						else if(prevMonth[i] == -5)  { num =8; }
+						else if(prevMonth[i] == -6)  { num =7; }
+						else if(prevMonth[i] == -7)  { num =6; }
+						else if(prevMonth[i] == -8)  { num =5; }
+						else if(prevMonth[i] == -9)  { num =4; }
+						else if(prevMonth[i] == -10) { num =3; }
+						else if(prevMonth[i] == -11) { num =2; }
+						else if(prevMonth[i] ==  0)  { num =1;  f= false;}
+						
+						moveMonth =  Integer.toString(num);
+					}
+						
+				}
+				if(f) { moveYear = Integer.toString((Integer.parseInt(moveYear) -1)); f= false;}
+				
 			// --- (현재 달) ---
 			}else if(moveResult.equals("thisMonth")){
 				moveMonth = fmtM.format(date);
@@ -105,12 +206,45 @@ public class MoneySaveController {
 			// --- (>) 이후---
 			}else if(moveResult.equals("next")){
 				moveMonth =  Integer.toString((Integer.parseInt(moveMonth) +1));
-				//getList(25);
-				// TODO
-				// 1. moveMonth 가 13 이상이면 조건 
+				
+				int num =(Integer.parseInt(moveMonth) +1);
+				boolean f = false;
+				
+				
+				// -- 내년으로 --
+				for (int i = 0; i < nextMonth.length; i++) {
+					if (nextMonth[i] == num) {
+						f = true;
+						
+						if(nextMonth[i] == 13) 		{ num =12; f=false;}
+						else if(nextMonth[i] == 14) { num =1; }
+						else if(nextMonth[i] == 15) { num =2; }
+						else if(nextMonth[i] == 16) { num =3; }
+						else if(nextMonth[i] == 17) { num =4; }
+						else if(nextMonth[i] == 18) { num =5; }
+						else if(nextMonth[i] == 19) { num =6; }
+						else if(nextMonth[i] == 20) { num =7; }
+						else if(nextMonth[i] == 21) { num =8; }
+						else if(nextMonth[i] == 22) { num =9; }
+						else if(nextMonth[i] == 23) { num =10; }
+						else if(nextMonth[i] == 24) { num =11; }
+						else if(nextMonth[i] == 25) { num =12; f=false;}
+						
+						moveMonth =  Integer.toString(num);
+					}
+					if(f) { moveYear = Integer.toString((Integer.parseInt(moveYear) +1)); f= false;}
+					
+				}
+				
+			}else if(moveResult.equals("prevY")){
+				moveYear = Integer.toString((Integer.parseInt(moveYear) -1));
+			}else if(moveResult.equals("nextY")){
+				moveYear = Integer.toString((Integer.parseInt(moveYear) +1));
 			}
+			
+			
 			 
-			 mav.addObject("str", 	lista);	 	// 		- O
+			mav.addObject("str", 	lista);	 	// 		- O
 			 mav.addObject("year", 	moveYear);	// 년	- O
 			 mav.addObject("month", moveMonth); // 월  	- O
 			 mav.addObject("day", 	moveDay);	// 일 	- X
@@ -242,7 +376,7 @@ public class MoneySaveController {
 		
 		
 		mav.addObject("result", service.delete(Integer.parseInt(fseq)));
-		mav.setViewName("moneySave/MoneySavePopUp");
+		mav.setViewName("moneySave/popupMoneySave");
 		
 		return mav;
 	}
@@ -269,7 +403,7 @@ public class MoneySaveController {
 		}
 		
 		mav.addObject("result", service.update(dto));
-		mav.setViewName("moneySave/MoneySavePopUp");
+		mav.setViewName("moneySave/popupMoneySave");
 		
 		return mav;
 	}
@@ -285,7 +419,7 @@ public class MoneySaveController {
 			,String p_m
 			,String result) {
 		
-		mav.setViewName("moneySave/MoneySavePopUp");
+		mav.setViewName("moneySave/popupMoneySave");
 		
 		mav.addObject("txt", txt);
 		mav.addObject("price", price);

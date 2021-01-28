@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.bet.project.model.MoneySave;
+import com.bet.project.model.Want;
 
 public interface MoneySaveService {
 
@@ -19,9 +20,13 @@ public interface MoneySaveService {
 	int delete(int num);
 	
 	int update(MoneySave dto);
+
+
+	void insertWant(Want dto);
+
+	List<Want> selectWant(Want dto);
 	
-
-	void getExcelDown(HttpServletResponse response, HttpServletRequest req, MoneySave param);
-
-
+	int deleteWant(Want dto);
+	
+	int updateWant(Want dto);
 }

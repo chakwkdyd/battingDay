@@ -5,7 +5,7 @@
 	xmlns:beans	 ="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc	 ="http://www.springframework.org/schema/mvc"
-
+	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
 						https://www.springframework.org/schema/mvc/spring-mvc.xsd
 						http://www.springframework.org/schema/beans 
@@ -14,6 +14,7 @@
 						https://www.springframework.org/schema/context/spring-context.xsd
 						http://www.springframework.org/schema/mvc 
 						http://www.springframework.org/schema/mvc/spring-mvc.xsd
+						http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 						">
 		
 		
@@ -65,8 +66,41 @@
 	 	<beans:constructor-arg value="C:/upload" />
 	</beans:bean>
 	
-
 	
+	<!-- 이메일 관련 -->
+	<!-- Gmail -->
+	  <beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	    <beans:property name="host" value="smtp.gmail.com" />
+	    <beans:property name="port" value="587" />
+	    <beans:property name="username" value="pdb3933@gmail.com" />
+	    <beans:property name="password" value="ekdnlt12" />
+	    <beans:property name="javaMailProperties">
+	    <beans:props>
+	      <beans:prop key="mail.smtp.auth">true</beans:prop>
+	      <beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+	    </beans:props>
+	    </beans:property>
+	  </beans:bean>
+		
+	
+
+	  <!-- naver mail -->
+	 <!--  <beans:bean class="org.springframework.mail.javamail.JavaMailSenderImpl"
+		    p:host="smtp.naver.com"
+		    p:port="465"
+		    p:username=""
+		    p:password="">
+    	<property name="javaMailProperties">
+	    <props>
+		      <prop key="mail.smtp.starttls.enable">true</prop>
+		      <prop key="mail.smtp.auth">true</prop>
+		      <prop key="mail.smtps.ssl.checkserveridentity">true</prop>
+		      <prop key="mail.smtps.ssl.trust">*</prop>
+		      <prop key="mail.debug">true</prop>
+		      <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+	    </props>
+	    </property>
+	  </beans:bean> -->
 	
 	
 	<context:component-scan base-package="com.bet.project" />

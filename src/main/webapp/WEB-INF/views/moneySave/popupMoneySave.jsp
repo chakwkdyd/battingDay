@@ -82,7 +82,7 @@ window.onload = function() {
 	
 	// ========= < 부모 메서드 호출 > =========
 	function fn_parents(){
-		window.opener.fn_submit(1); 
+		window.opener.fn_submit(1);
 	}
 
 	// ========= < Validation > =========

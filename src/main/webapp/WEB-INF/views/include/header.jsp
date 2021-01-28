@@ -14,6 +14,7 @@
 	<a href="${path}/board/insertBoard" >방 만들기</a>
 	<a href="${path}/callinder/moneySave.do">가계부 </a>
 	
+	<a href="${path}/plan/planing.do">계획표 </a>
 	<a href="${path}/sample/openSampleList.do">test </a>
 	
 </div>

@@ -15,7 +15,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result column="reg_date" 		property="redDate"/>
     </resultMap> -->
 	
+	<insert id="insertWant" parameterType="com.bet.project.model.Want">
+	/* id="insertWant" [Want insert ] [박다빈 / 2020-12-29] */
+	INSERT INTO WANT_TB(
+		 years
+		,months
+		,txt 
+		,price
+		,fixeYn
+		,delYn
+	)values(
+		 #{years}
+		,#{months}
+		,#{txt}
+		,#{price}
+		,#{fixeYn}
+		,#{delYn}
+	)
+	</insert>
 	
+	<insert id="deleteWant" parameterType="com.bet.project.model.Want">
+	/* id="deleteWant" [Want 삭제 ] [박다빈 / 2020-01-04] */
+	UPDATE  WANT_TB
+		set delYn = 'Y'
+	where 1=1
+	and seq = #{seq}
+	</insert>
+	
+	<insert id="updateWant" parameterType="com.bet.project.model.Want" >
+	/* id="updateWant" [Want 업데이트 ] [박다빈 / 2020-01-04] */
+	UPDATE  WANT_TB
+		set
+			 txt   = #{txt}
+		    ,price = #{price}
+	where 1=1
+	and seq = #{seq}
+	</insert>
 	
 	<insert id="inertMoneykeeping" parameterType="java.util.ArrayList">
 	/* id="inertMoneykeeping" [가계부 insert문 ] [박다빈 / 2020-10-20] */
@@ -51,6 +86,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 										
+	<select id="selectWant" parameterType="com.bet.project.model.Want" resultType="com.bet.project.model.Want">
+	/* id="selectWant" [Want List 조회] [박다빈 / 2020-12-29] */
+		SELECT
+   			x.*
+		FROM (SELECT 
+			 	*
+			FROM bet.want_tb
+			where  1=1
+			and delYn  = 'N'
+			and years  = #{years}
+			and months = #{months}
+			and fixeYn = 'N'
+			
+	  	UNION ALL  	
+	  	
+	  		SELECT 
+			 	*
+			FROM bet.want_tb
+			WHERE 1=1		
+			AND delYn  	='N'
+			and fixeYn = 'Y' ) X
+	</select>
+	
+	
 	<select id="getList" parameterType="com.bet.project.model.MoneySave" resultType="com.bet.project.model.MoneySave">
 	/* id="getList" [년,월별 가계부 data 갖고오기] [박다빈 / 2020-10-20] */
 		SELECT

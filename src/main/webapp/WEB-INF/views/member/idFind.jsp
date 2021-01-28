@@ -12,16 +12,16 @@
 
 <script type="text/javascript">
 	
-	$(document).ready(function(){
+	 $(document).ready(function(){
 		$("#resultNum").css("display", "none");
 
 
 
 		$("#btn").click(function(){
 			var param = { "email" : $("#user_email").val() };
-
+			alert(1);
 			$.ajax({
-				 url : "/member/checkEmail.do"
+				 url : "/email/checkEmail.do"
 				,type: "get"
 				,data : param
 				,datatype: 'text'
@@ -29,16 +29,17 @@
 
 					if(data == false){
 						alert('입력하신 이메일은 없는 이메일 입니다.');
+						$("#resultNum").css("display", "none");
 					}else{
 						alert('메일로 임시 비밀번호가 보내졌습니다.');
-						
+						$("#resultNum").css("display", "block");
 					}
 					
 				}
 				
 			});
 		});
-	});
+	}); 
 	
 	
 	
@@ -46,27 +47,39 @@
 <body>
 <h2>ID찾기</h2>
 
+<form id="frm">
 	<table border="1" a>
 	
 			<tr><td style="text-align: center; background-color: #B4FFFF;">이메일</td></tr>
 			<tr>
-				<td>
+				 <td>
 					<input type="email" name="user_email" id="user_email">
-				</td>
+				</td> 
 			</tr>
 				
 			<tr>
 				<td>
-					<input type="button"  value="확인" id="btn"  style="width: 100%;">
+					<input type="submit"  value="확인" id="btn"  style="width: 100%;">
 				</td>
 			</tr>
 			
 			<tr id="resultNum">
 				<td>
 					<input type="text"  id="momentPw"  placeholder="임시번호 "   style="width: 50%;">
-					<input type="button"  value="확인" id="btn"  style="width: 50%;">
+					<input type="button"  value="확인" id="btn2"  style="width: 50%;">
 				</td>
 			</tr>
 	</table>
+</form>	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </body>
 </html>

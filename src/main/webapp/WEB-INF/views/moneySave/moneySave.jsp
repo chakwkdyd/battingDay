@@ -14,6 +14,7 @@
  	.day 		{ background-color: #CEFBC9;}
 	.month 		{ width : 500px;}
 	
+	
 	.P_tr1:not(.category){
 		background-color: #FAED7D;
 		height: 150px;
@@ -23,14 +24,25 @@
 		background-color: #B5B2FF;
 		height: 150px;
 	}
+	
 </style>
 
 
 <script type="text/javascript">
 	var count = 0; // 전역변수(고정값 삭제)
 
+	
+	$(document).ready(function(){
+		var px = window.innerWidth + "px";
+		$("#bodys").css({
+			 "overflow" : "scroll"
+			,"float":"left"
+			,"width":px
+		});
 
-
+		fn_selWant();
+	});
+	
 
 	// ========= < 엑셀다운로드 > =========
 	function fn_excel(){
@@ -43,7 +55,7 @@
 	function fn_enter(flag, num){
 		var str   = $('#'+flag+'_txt_'+num).val();
 		var price = $('#'+flag+'_num_'+num).val();
-		
+
 		 if (window.event.keyCode == 13) {
 			if(flag =="P"){
 				if(str ==""){ 
@@ -54,6 +66,7 @@
 					return;
 				}else{
 					 fn_Calculation(flag, num);
+					 $('#'+flag+'_txt_'+num).focus();
 				}			
 			}else if(flag =="M"){
 				if(str ==""){ 
@@ -64,13 +77,28 @@
 					return;
 				}else{
 					 fn_Calculation(flag, num);
+					 $('#'+flag+'_txt_'+num).focus();
 				}
 			}
 		}
 	}
 
+	// TODO (디테일 페이지때 고정 값인지 아닌지 구분값을 보내줘야함) ->		${fixeYn}	 	+"&fixeYn="+
+	// ========= < I WANT POPUP  > =========
+	function fn_popupWant(flag, seq, txt, price){
+		var popTitle 	= "childwin";
+		var popOption 	= "width=800,height=400,left=600";
 
-	
+		if(seq == null){
+			window.open("/callinder/popupWant.do?flag="+flag+"&years="+${year}+"&months="+${month}, popTitle, popOption);
+		}else{
+			window.open("/callinder/popupWant.do?flag="+flag+"&years="+${year}+"&months="+${month}+"&seq="+seq+"&txt="+txt+"&price="+price, popTitle, popOption);
+		}
+		
+	}
+
+		
+		
 	
 	// ========= < li 삭제(서버/팝업)  > =========
 	function fn_reset(e, allResult, flag, num, count, fixe){	
@@ -138,7 +166,7 @@
 
 	// ========= < 이전 이달 이후  > =========
 	function fn_chageMonth(str){
-		$("#move_result").val(str);		// 값
+		$("#move_result").val(str);		// 구분(prev, thisMonth, next, prevY ,nextY)
 		$("#move_year").val(${year} );	// 년
 		$("#move_month").val(${month});	// 월
 		
@@ -172,7 +200,52 @@
 		}
 	}
 
+	// ==== < Want 조회 > ====
+	function fn_selWant(){
+		
+		var data = {
+				 "year" :  ${year}
+				,"month" : ${month}
+		}
+		
+		
+		$.ajax({
+			 url : "/callinder/selectWant.do"
+			,type : 'get'
+			,data : data			
+			,datatype : 'text'
+			,success : function(result){
 
+			
+				
+				
+				// 1. 모든 li 제거
+				$('#div_want').empty();
+				
+				// 2. 서버에서 갖고 온값들 li에 뿌려주기
+				if(result != null){
+					// ==== 루프 ====
+					result.forEach(function(element){
+
+						
+						if(element.fixeYn == 'Y'){
+							$('#div_want').append("<li style='float:left; color:blue;' id=\"want_Li_"+element.seq+"\"  onclick=fn_popupWant('update','"+element.seq+"','"+element.txt+"'"+",'"+element.price+"')>"+ element.txt +" : "+element.price+"</li>"); 
+						}else{
+							$('#div_want').append("<li style='float:left;' id=\"want_Li_"+element.seq+"\"  onclick=fn_popupWant('update','"+element.seq+"','"+element.txt+"'"+",'"+element.price+"')>"+ element.txt +" : "+element.price+"</li>"); 
+						}
+					});
+				}
+			}
+			,error: function(data){
+				alert("====== 에 러 222 ======");
+			}
+			
+		});
+	}
+
+	
+	// ==== < Want 삭제> ====
+	
 	
 	// ==== < fn_submit > ====
 	function fn_submit(num){
@@ -216,7 +289,7 @@
 				}
 			}
 			,error: function(data){
-				alert("====== 에 러 ======");
+				alert("====== 에 러 111======");
 			}
 			
 		});
@@ -489,14 +562,18 @@
 
 	<form id="frm" method="post">
 		<h3> < ${year}년  ${month}월 > </h3>
+			
+		
 		
 		<div style="float:left; margin-top: 30px; padding:2px;">
 			<input type="button" onclick="fn_submit('insert');" style="float:left; margin-right: 15px; padding:2px; width: 60px;" value="저장">
-			<input type="button" onclick="fn_excel();"  style="float:left; margin-right: 15px; padding:2px; width: 60px;" value="엑셀다운">
+			<input type="button" onclick="fn_excel();"  		style="float:left; margin-right: 15px; padding:2px; width: 60px;" value="엑셀다운">
 			
-			<input type="button" onclick="fn_chageMonth('prev');" style="float:left; margin-left: 5px; padding:2px; width: 25px; height: 25px;" value="<">
-			<input type="button" onclick="fn_chageMonth('thisMonth');" style="float:left; margin-left: 5px; padding:2px; height:25px;" value="This Month">
-			<input type="button" onclick="fn_chageMonth('next');" style="float:left; margin-left: 5px; padding:2px; width: 25px; height: 25px;" value=">">
+			<input type="button" onclick="fn_chageMonth('prevY');" 		style="float:left; margin-left: 5px; padding:2px; width: 25px; height: 25px;" value="<<">
+			<input type="button" onclick="fn_chageMonth('prev');" 		style="float:left; margin-left: 5px; padding:2px; width: 25px; height: 25px;" value="<">
+			<input type="button" onclick="fn_chageMonth('thisMonth');" 	style="float:left; margin-left: 5px; padding:2px; height:25px;" value="This Month">
+			<input type="button" onclick="fn_chageMonth('next');" 		style="float:left; margin-left: 5px; padding:2px; width: 25px; height: 25px;" value=">">
+			<input type="button" onclick="fn_chageMonth('nextY');" 		style="float:left; margin-left: 5px; padding:2px; width: 25px; height: 25px;" value=">>">
 			
 		</div>
 		<div style="background: pink; float:left; margin-left: 50px; margin-bottom: 10px;">
@@ -512,6 +589,16 @@
 			&nbsp;&nbsp;
 		</div>
 		
+		<div style="float:right; background: yellow; margin: 15px; padding:2px; width:px;">
+		
+			<div style="float:left; font-weight:bold; text-align: center;"> < [${year}년  ${month}월] I WANT > </div>  
+			<input type="button" style="float:left; margin-left: 10px;"  value="추가" onclick="fn_popupWant('insert')">
+			
+			<br><br>
+			<div id="div_want" style="float:bottom">
+			</div>
+		</div>
+		
 		<div style="background: pink; float:left; margin-left: 10px; margin-bottom: 10px;">
 			<div style="background: pink; float:left; text-align: center;">
 				<p style="float:left; font-weight:bold; align-self: center;">&nbsp;${month}월 고정 값들:&nbsp;&nbsp;</p>
@@ -520,7 +607,8 @@
 			<div id="li_div" style="background: pink; float:right;"></div>
 		</div>
 		
-		<div style="overflow:scroll; float:left; width:1500px;">
+		<!-- 현재 스크린 기준으로 width를 수정해야함 -->
+		<div id="bodys">
 			<table border="1" >
 				<thead>
 					<tr>	

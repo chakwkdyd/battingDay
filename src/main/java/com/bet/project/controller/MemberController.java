@@ -79,34 +79,18 @@ public class MemberController {
 	public boolean checkId(@RequestParam String id) {
 		boolean result;
 		
-		if(memberService.checkId(id) == 1) {
+		if(memberService.checkId(id) == 0) {
 			System.out.println("사용불가!! false");
-			result= false;
+			result= true;
 		}else {
+			result= false;
 			System.out.println("사용 가능!! true");
-			result= true;
 		}
 		
 		
 		return result;
 	}
-	@RequestMapping("/checkEmail.do")
-	@ResponseBody
-	public boolean checkEmail(@RequestParam String email) {
-		boolean result;
-		
-		// -- 이메일 있으면 --
-		if(memberService.checkEmail(email) != 0) {
-			
-			result= true;
-			
-		}else {
-			result= false;
-		}
-		
-		
-		return result;
-	}
+	
 	
 	
 	
