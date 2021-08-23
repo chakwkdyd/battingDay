@@ -14,7 +14,7 @@ window.onload = function() {
 	if(1 == ${result}){
 		fn_parents();
 		close();
-	}  
+	} 
 }
 
 	// ==== < li 삭제 ajax > ====
