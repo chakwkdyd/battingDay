@@ -3,7 +3,6 @@
 <html>
 <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="../include/header.jsp"/>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>가계부</title>
@@ -100,7 +99,7 @@
 		
 		
 	
-	// ========= < li 삭제(서버/팝업)  > =========
+	// ========= < li 삭제(서버/팝업)  > =========yt
 	function fn_reset(e, allResult, flag, num, count, fixe){	
 		if(e == null){
 			// TODO -> ${lastDay}는 현재 페이지 기준으로 upload되야함
@@ -403,7 +402,7 @@
 				var pResult = parseInt(0); // 계산된 수입합(일반)
 				var mNum 	= parseInt(0); // 각 low의 지출값 담을 변수
 				var mResult = parseInt(0); // 계산된 지출합(일반)
-	
+	  
 				// nan이면 안 돌기
 	   			for(var i=1; i<=${lastDay}; i++) {
 		   			if( $('#P_result_'+i).text() ){ // 값이 있으면 true

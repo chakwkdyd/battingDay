@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
-<jsp:include page="../include/header.jsp"/>
 </head>
 <body>
 	

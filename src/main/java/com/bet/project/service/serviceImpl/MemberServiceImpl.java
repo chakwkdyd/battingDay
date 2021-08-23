@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bet.project.dao.MemberDao;
+import com.bet.project.dao.MemberDAO;
 import com.bet.project.model.Member;
 import com.bet.project.service.MemberService;
 
@@ -17,7 +17,7 @@ import com.bet.project.service.MemberService;
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
-	MemberDao memberDao;
+	MemberDAO memberDao;
 	 
 	@Override
 	public List<Member> list() {

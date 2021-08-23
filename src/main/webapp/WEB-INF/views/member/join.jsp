@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 </head>
 <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
-<jsp:include page="../include/header.jsp"/>
 
 	
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>

@@ -24,8 +24,7 @@ public class HomeController {
 	 */
 	@RequestMapping("/")
 	public String joinPage() {
-		
-		return "/member/join";
+		return "member/join";
 	}
 	
 }

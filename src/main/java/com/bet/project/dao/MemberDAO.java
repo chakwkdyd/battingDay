@@ -10,7 +10,7 @@ import com.bet.project.model.Member;
 
 
 @Repository
-public class MemberDao {
+public class MemberDAO {
 	
 	@Autowired
 	SqlSession sqlSession;

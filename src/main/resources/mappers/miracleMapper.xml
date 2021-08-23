@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="miracleMapper">
+	
+	
+  <!--  <resultMap type="map" id="selectMapList">
+   		column : DB값 || property : Class값 
+        <result column="student_no" 	property="studentNo"/>
+        <result column="student_name" 	property="studentName"/>
+        <result column="student_tel" 	property="studentTel"/>
+        <result column="student_Addr"	property="studentAddr"/>
+        <result column="student_email" 	property="studentEmail"/>
+        <result column="reg_date" 		property="redDate"/>
+    </resultMap> -->
+	
+	
+										
+	<select id="listMiracle" resultType="com.bet.project.model.Miracle">
+	/* id="listMiracle" [Miracle List 조회] [박다빈 / 2020-12-29] */
+	select 
+		*
+	from miracle_routines
+	order by num
+	</select>
+	
+</mapper>

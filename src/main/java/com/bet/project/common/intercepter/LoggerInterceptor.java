@@ -5,10 +5,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-public class LoggerInterceptor extends HandlerInterceptorAdapter {
+public class LoggerInterceptor implements HandlerInterceptor{
 	
 	// Log 객체를 생성할때는 몇가지 방법이 있는데 여기서는 생성자에 현재 클래스를 입력하였다.
 	 protected Log log = LogFactory.getLog(LoggerInterceptor.class);
@@ -20,11 +20,13 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
 	// preHandler()은 컨트롤러가 호출되기 전에 실행되고
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+		System.out.println("ZZZ");
+		log.debug("======================================          START         ======================================");
+		log.debug(" Request URI \t:  " + request.getRequestURI());
 		if (log.isDebugEnabled()) {
-			log.debug("======================================          START         ======================================");
 			log.debug(" Request URI \t:  " + request.getRequestURI());
 		}
-		return super.preHandle(request, response, handler);
+		return true;
 	}
 	
 	// postHandle()은 컨트롤러가 실행되고 난 후에 호출된다
@@ -33,6 +35,12 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
 		if (log.isDebugEnabled()) {
 			log.debug("======================================           END          ======================================\n");
 		}
+	}
+
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+			throws Exception {
+		
 	}
 	
 }

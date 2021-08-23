@@ -251,7 +251,7 @@ public class MoneySaveController {
 			 mav.addObject("lastDay", 	cal.getActualMaximum(cal.DAY_OF_MONTH));// 마지막 일 
 			 
 		 }
-		mav.setViewName("moneySave/moneySave");
+		mav.setViewName("/moneySave/moneySave");
 		
 		return mav;
 	}
