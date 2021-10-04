@@ -23,7 +23,7 @@ public class PagingController {
 	@RequestMapping(value="/paing/testPaging")
 	public void testPaging(){}
 	
-	
+	 
 	@RequestMapping(value="/paing/boardList")
 	public ModelAndView openBoardList(Criteria cri) {
 	    ModelAndView mav = new ModelAndView();
