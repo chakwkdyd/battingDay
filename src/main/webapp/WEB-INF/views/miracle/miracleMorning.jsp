@@ -394,11 +394,26 @@
 		new Timer();
 	}
 	
-	
+	function init(){
+	    txt1.onmousemove = function(){
+	    	txt1.value=event.clientX+":"+event.clientY+"\r\n"+txt1.value;
+	        
+	        /* window.document.form1.txt2.size=event.clientX/2; */
+	        
+	        if(event.clientX %3==0){
+	            window.document.body.bgColor="yellow";
+	        }else if(event.clientX %3==1){
+	            window.document.body.bgColor="red";
+	        }else if(event.clientX %3==2){
+	            window.document.body.bgColor="green";
+	        }
+	        
+	    };
+	}
 </script>
 
 
-<body> 
+<body onload="init();"> 
 	<br>
 	
 	<input type="button" value="카카오 공유">
@@ -446,7 +461,7 @@
 			</td>
 			
 			  
-			<h3> <##년 ##월 ##일 평점> </h3>		
+			<h3 name="txt1" id="txt1"> <##년 ##월 ##일 평점> </h3>		
 			<h3> <오늘의 칭찬 3> </h3>		
 			
 			<%-- <%=request.getRealPath("/") %><!-- 현재 프로젝트의 실제 경로 --> --%>

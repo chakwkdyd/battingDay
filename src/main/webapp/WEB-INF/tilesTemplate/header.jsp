@@ -11,5 +11,7 @@
 	<a href="${path}/miracle/miracle.do">계획표 </a>
 	<a href="${path}/sample/openSampleList.do">test </a>
 	
+	<a href="${path}/paing/boardList" >페이징</a>
+	
 	<hr>
 </div>

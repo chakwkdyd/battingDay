@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="paging">
+	
+	
+<!-- 	
+	create table test_paging_board(
+	 `idx`  			int
+	,`title`		VARCHAR(50)
+	,`writer`		VARCHAR(50)
+	,`insert_day`	DATE
+	,`enter_cnt`	int
+	);
+
+
+	CREATE UNIQUE INDEX `page_idx` ON test_paging_board (`idx`); 
+
+-->
+
+
+	
+	
+	<select id="getTotalCnt" resultType="int" >
+		SELECT 
+			count(*) 
+		FROM 
+			bet.test_paging_board
+	</select>
+	
+	
+	<select id="selectPagingList" resultType="com.bet.project.common.model.PaginVO"  parameterType="com.bet.project.common.model.PageMaker" >
+	/* id="selectPagingList" [박다빈] */
+		SELECT 
+			 idx
+			,title
+			,writer
+			,insert_day
+			,enter_cnt 
+		FROM 
+			bet.test_paging_board
+		ORDER BY idx ASC
+		LIMIT #{pageStart11}, #{perPageNum}
+	</select>
+	
+	
+	
+	
+</mapper>
